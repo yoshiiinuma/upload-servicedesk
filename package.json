@@ -1,5 +1,5 @@
 {
-  "name": "azure-servicedesk",
+  "name": "upload-servicedesk",
   "version": "1.0.0",
   "description": "Export Service Desk Ticket Data in CSV to Azure SQL Server",
   "main": "upload-ticket.js",
