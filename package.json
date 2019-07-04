@@ -1,0 +1,38 @@
+{
+  "name": "azure-servicedesk",
+  "version": "1.0.0",
+  "description": "Export Service Desk Ticket Data in CSV to Azure SQL Server",
+  "main": "upload-ticket.js",
+  "scripts": {
+    "build": "babel src --out-dir dist -s",
+    "upload-tickets": "babel-node src/upload-tickets.js",
+    "upload-details": "babel-node src/upload-details.js",
+    "create-tickets": "babel-node src/create-ticket-table.js",
+    "create-details": "babel-node src/create-detail-table.js",
+    "drop-tickets": "babel-node src/drop-ticket-table.js",
+    "drop-details": "babel-node src/drop-detail-table.js",
+    "unit": "NODE_ENV=test mocha --require @babel/register --require @babel/polyfill './test/xxxx-test.js' --exit || true",
+    "test": "NODE_ENV=test mocha --require @babel/register --require @babel/polyfill './test/**/*.{js,es6}' --exit || true"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "keywords": [],
+  "author": "Yoshiaki Iinuma",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.2",
+    "tedious": "^6.1.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4"
+  }
+}
