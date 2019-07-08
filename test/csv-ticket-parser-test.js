@@ -1,6 +1,7 @@
 
 import { expect } from 'chai';
 
+import * as Helper from './helper.js';
 import * as parser from '../src/csv-ticket-parser.js';
 
 const line = '"Assigned, To","ServiceType","Completed","SecurityCategory","Priority","SecuritySystems","IP","AdditionalRecipient","Created","Status","Secondary, Assignee","RequestType","ModifiedBy","id","Created, By","StartDate","Urgency","DueDate","Dept","Topic","Desc, ript, ion","ReferenceNumber","Modified","SubTopic","Customer","SecurityResults","ReferenceURL","Ti, tle","CreationType"';
@@ -77,22 +78,9 @@ describe('#convToParams', () => {
   });
 });
 
-const createFakeBulkLoader = () => {
-  let cols = {};
-
-  return {
-    getColumns: () => {
-      return cols;
-    },
-    addColumn: (name, type, opts) => {
-      cols[name] = { type: type.type, opts };
-    }
-  };
-};
-
 describe('#addColumns', () => {
   it('add columns to BulkLoader instance', () => {
-    const r = createFakeBulkLoader();
+    const r = Helper.createFakeBulkLoader();
     parser.addColumns(r);
     expect(r.getColumns()).to.eql(expCols);
   });
