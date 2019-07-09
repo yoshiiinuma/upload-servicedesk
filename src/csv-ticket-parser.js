@@ -21,14 +21,14 @@ export const parse = (line) => {
 
 export const convToParams = (line) => {
   let [assignedTo, serviceType, completed, securityCategory, priority, securitySystems,
-    iP, additionalRecipient, created, status, secondaryAssignee, requestType,
+    ip, additionalRecipient, created, status, secondaryAssignee, requestType,
     modifiedBy, id, createdBy, startDate, urgency, dueDate, dept, topic, description,
     referenceNumber, modified, subTopic, customer, securityResults, referenceURL,
     title, creationType] = parse(line.trim());
 
   const r = {
     assignedTo, serviceType, completed, securityCategory, priority, securitySystems,
-    iP, additionalRecipient, created, status, secondaryAssignee, requestType,
+    ip, additionalRecipient, created, status, secondaryAssignee, requestType,
     modifiedBy, id, createdBy, startDate, urgency, dueDate, dept, topic, description,
     referenceNumber, modified, subTopic, customer, securityResults, referenceURL,
     title, creationType
@@ -50,6 +50,7 @@ export const addColumns = (bulkLoader) => {
   bulkLoader.addColumn('dept', TYPES.NVarChar, { nullable: true, length: 6 });
   bulkLoader.addColumn('description', TYPES.NVarChar, { nullable: true, length: 63999 });
   bulkLoader.addColumn('ip', TYPES.NVarChar, { nullable: true, length: 128 });
+  bulkLoader.addColumn('priority', TYPES.NVarChar, { nullable: true, length: 10 });
   bulkLoader.addColumn('referenceNumber', TYPES.NVarChar, { nullable: true, length: 128 });
   bulkLoader.addColumn('referenceUrl', TYPES.NVarChar, { nullable: true, length: 1024 });
   bulkLoader.addColumn('requestType', TYPES.NVarChar, { nullable: true, length: 32 });
@@ -62,7 +63,12 @@ export const addColumns = (bulkLoader) => {
   bulkLoader.addColumn('subTopic', TYPES.NVarChar, { nullable: true, length: 128 });
   bulkLoader.addColumn('topic', TYPES.NVarChar, { nullable: true, length: 128 });
   bulkLoader.addColumn('urgency', TYPES.NVarChar, { nullable: true, length: 10 });
+  bulkLoader.addColumn('startDate', TYPES.Date, { nullable: true });
+  bulkLoader.addColumn('completed', TYPES.Date, { nullable: true });
+  bulkLoader.addColumn('dueDate', TYPES.DateTime, { nullable: true });
   bulkLoader.addColumn('createdBy', TYPES.NVarChar, { nullable: true, length: 256 });
+  bulkLoader.addColumn('created', TYPES.DateTime, { nullable: true });
+  bulkLoader.addColumn('modified', TYPES.DateTime, { nullable: true });
   bulkLoader.addColumn('modifiedBy', TYPES.NVarChar, { nullable: true, length: 256 });
 };
 

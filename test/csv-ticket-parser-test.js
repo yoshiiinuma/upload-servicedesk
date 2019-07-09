@@ -15,7 +15,7 @@ const expObj = {
   securityCategory: 'SecurityCategory',
   priority: 'Priority',
   securitySystems: 'SecuritySystems',
-  iP: 'IP',
+  ip: 'IP',
   additionalRecipient: 'AdditionalRecipient',
   created: 'Created',
   status: 'Status',
@@ -50,6 +50,7 @@ const expCols = {
   dept: { type: 'NVARCHAR', opts: { nullable: true, length: 6 } },
   description: { type: 'NVARCHAR', opts: { nullable: true, length: 63999 } },
   ip: { type: 'NVARCHAR', opts: { nullable: true, length: 128 } },
+  priority: { type: 'NVARCHAR', opts: { nullable: true, length: 10 } },
   referenceNumber: { type: 'NVARCHAR', opts: { nullable: true, length: 128 } },
   referenceUrl: { type: 'NVARCHAR', opts: { nullable: true, length: 1024 } },
   requestType: { type: 'NVARCHAR', opts: { nullable: true, length: 32 } },
@@ -62,6 +63,11 @@ const expCols = {
   subTopic: { type: 'NVARCHAR', opts: { nullable: true, length: 128 } },
   topic: { type: 'NVARCHAR', opts: { nullable: true, length: 128 } },
   urgency: { type: 'NVARCHAR', opts: { nullable: true, length: 10 } },
+  startDate: { type: 'DATEN', opts: { nullable: true } },
+  completed: { type: 'DATEN', opts: { nullable: true } },
+  dueDate: { type: 'DATETIME', opts: { nullable: true } },
+  created: { type: 'DATETIME', opts: { nullable: true } },
+  modified: { type: 'DATETIME', opts: { nullable: true } },
   createdBy: { type: 'NVARCHAR', opts: { nullable: true, length: 256 } },
   modifiedBy: { type: 'NVARCHAR', opts: { nullable: true, length: 256 } }
 };
