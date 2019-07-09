@@ -6,13 +6,15 @@ import { Connection, Request } from 'tedious'
 import MSSQL from './mssql-client.js';
 import loadSql from './sql-loader.js'; 
 import createTaskRunner from './task-runner.js';
+import * as TicketParser from './csv-ticket-parser.js';
+import * as DetailParser from './csv-detail-parser.js';
 
-const getUploader = (config, parser) => {
+const getUploader = (config, table, parser) => {
 
-  const setupBulkLoader = async (config, table, id) => {
+  const setupBulkLoader = async (config, id) => {
     console.log('SetupBulkload Started with Task ' + id);
     const conn = await MSSQL.createConnection(config);
-    const bulkLoader = await MSSQL.createBulkLoad(conn, 'Tickets', (err, rowCount) => {
+    const bulkLoader = await MSSQL.createBulkLoad(conn,  table, (err, rowCount) => {
         if (err) {
           console.log('SetupBulkLoad Error Task ' + id);
           console.log(err);
@@ -37,7 +39,7 @@ const getUploader = (config, parser) => {
     return async () => {
       console.log('Starting Task ' + id + ' with ' + data.length + ' records');
 
-      const [ conn, bulkLoader ] = await setupBulkLoader(config, 'Tickets', id);
+      const [ conn, bulkLoader ] = await setupBulkLoader(config, id);
       data.forEach((params) => {
         bulkLoader.addRow(params);
       });
@@ -58,6 +60,7 @@ const getUploader = (config, parser) => {
     };
   };
 
+  const rgxNumber = /^\d+$/;
   /*
    * Parses CSV file, and creates upload tasks and puts into TaskRunner Queue.
    *
@@ -88,10 +91,9 @@ const getUploader = (config, parser) => {
       }
       runner.stop();
     });
-    rl.on('line', async (line) => {
-      try {
-        const params = parser.convToParams(line);
-        if (params.id && params.id != 'id') {
+    rl.on('line', async (line) => { try { const params = parser.convToParams(line);
+        //if (params.id && params.id != 'id') {
+        if (rgxNumber.test(params.id)) {
           cnt += 1;
           //console.log('ID: ' + params.id + ', CNT: ' + cnt);
           set.push(params);
@@ -116,5 +118,11 @@ const getUploader = (config, parser) => {
   return { uploadCsv };
 };
 
-export default getUploader;
+export const getTicketUploader = (config) => {
+  return getUploader(config, 'Tickets', TicketParser);
+};
+
+export const getDetailUploader = (config) => {
+  return getUploader(config, 'TicketDetails', DetailParser);
+};
 
