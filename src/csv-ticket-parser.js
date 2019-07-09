@@ -68,7 +68,7 @@ export const addColumns = (bulkLoader) => {
   bulkLoader.addColumn('dueDate', TYPES.DateTime, { nullable: true });
   bulkLoader.addColumn('createdBy', TYPES.NVarChar, { nullable: true, length: 256 });
   bulkLoader.addColumn('created', TYPES.DateTime, { nullable: true });
-  bulkLoader.addColumn('modified', TYPES.DateTime, { nullable: true });
   bulkLoader.addColumn('modifiedBy', TYPES.NVarChar, { nullable: true, length: 256 });
+  bulkLoader.addColumn('modified', TYPES.DateTime, { nullable: true });
 };
 
