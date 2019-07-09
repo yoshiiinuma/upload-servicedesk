@@ -4,34 +4,32 @@ import { expect } from 'chai';
 import * as Helper from './helper.js';
 import * as parser from '../src/csv-ticket-parser.js';
 
-const line = '"Assigned, To","ServiceType","Completed","SecurityCategory","Priority","SecuritySystems","IP","AdditionalRecipient","Created","Status","Secondary, Assignee","RequestType","ModifiedBy","id","Created, By","StartDate","Urgency","DueDate","Dept","Topic","Desc, ript, ion","ReferenceNumber","Modified","SubTopic","Customer","SecurityResults","ReferenceURL","Ti, tle","CreationType"';
-
-const expArray = [ 'Assigned, To', 'ServiceType', 'Completed', 'SecurityCategory', 'Priority', 'SecuritySystems', 'IP', 'AdditionalRecipient', 'Created', 'Status', 'Secondary, Assignee', 'RequestType', 'ModifiedBy', 'id', 'Created, By', 'StartDate', 'Urgency', 'DueDate', 'Dept', 'Topic', 'Desc, ript, ion', 'ReferenceNumber', 'Modified', 'SubTopic', 'Customer', 'SecurityResults', 'ReferenceURL', 'Ti, tle', 'CreationType' ];
+const line = '"Assigned, To","ServiceType","05/05/2019","SecurityCategory","Priority","SecuritySystems","IP","AdditionalRecipient","01/01/2019 01:01:01","Status","Secondary, Assignee","RequestType","ModifiedBy","id","Created, By","02/02/2019","Urgency","04/04/2019 04:04:04","Dept","Topic","Desc, ript, ion","ReferenceNumber","03/03/2019 03:03:03","SubTopic","Customer","SecurityResults","ReferenceURL","Ti, tle","CreationType"';
 
 const expObj = {
   assignedTo: 'Assigned, To',
   serviceType: 'ServiceType',
-  completed: 'Completed',
+  completed: new Date('05/05/2019'),
   securityCategory: 'SecurityCategory',
   priority: 'Priority',
   securitySystems: 'SecuritySystems',
   ip: 'IP',
   additionalRecipient: 'AdditionalRecipient',
-  created: 'Created',
+  created: new Date('01/01/2019 01:01:01'),
   status: 'Status',
   secondaryAssignee: 'Secondary, Assignee',
   requestType: 'RequestType',
   modifiedBy: 'ModifiedBy',
   id: 'id',
   createdBy: 'Created, By',
-  startDate: 'StartDate',
+  startDate: new Date('02/02/2019'),
   urgency: 'Urgency',
-  dueDate: 'DueDate',
+  dueDate: new Date('04/04/2019 04:04:04'),
   dept: 'Dept',
   topic: 'Topic',
   description: 'Desc, ript, ion',
   referenceNumber: 'ReferenceNumber',
-  modified: 'Modified',
+  modified: new Date('03/03/2019 03:03:03'),
   subTopic: 'SubTopic',
   customer: 'Customer',
   securityResults: 'SecurityResults',
@@ -71,12 +69,6 @@ const expCols = {
   createdBy: { type: 'NVARCHAR', opts: { nullable: true, length: 256 } },
   modifiedBy: { type: 'NVARCHAR', opts: { nullable: true, length: 256 } }
 };
-
-describe('#parse', () => {
-  it('splits a comma-separated-string into array', () => {
-    expect(parser.parse(line)).to.be.eql(expArray);
-  });
-});
 
 describe('#convToParams', () => {
   it('splits a comma-separated-string into array', () => {

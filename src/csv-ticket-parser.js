@@ -1,23 +1,7 @@
 
 import { TYPES } from 'tedious'
 
-const rgxTicketCsv = /("([^"]*)")*,?(.*)$/;
-
-export const parse = (line) => {
-  const columns = [];
-  do {
-    var match = rgxTicketCsv.exec(line);
-    //console.log('----------------------------------------------');
-    //console.log('>>>' + match[2] + '<<<');
-    //console.log('----------------------------------------------');
-    columns.push(match[2]);
-    line = match[3];
-    //console.log(line);
-    //console.log(match);
-  } while (!!line && line.length > 0)
-  
-  return columns;
-}
+import parse from './csv-parser.js';
 
 export const convToParams = (line) => {
   let [assignedTo, serviceType, completed, securityCategory, priority, securitySystems,
@@ -25,6 +9,12 @@ export const convToParams = (line) => {
     modifiedBy, id, createdBy, startDate, urgency, dueDate, dept, topic, description,
     referenceNumber, modified, subTopic, customer, securityResults, referenceURL,
     title, creationType] = parse(line.trim());
+
+  if (startDate) startDate = new Date(startDate);
+  if (completed) completed = new Date(completed);
+  if (dueDate) dueDate = new Date(dueDate);
+  if (created) created = new Date(created);
+  if (modified) modified = new Date(modified);
 
   const r = {
     assignedTo, serviceType, completed, securityCategory, priority, securitySystems,
