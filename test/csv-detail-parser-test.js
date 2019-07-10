@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import * as Helper from './helper.js';
 import * as parser from '../src/csv-detail-parser.js';
 
-const line1 = '"DetailNotes","03/03/2019 04:04:04","Original, Created, By",' +
+const line = '"DetailNotes","03/03/2019 04:04:04","Original, Created, By",' +
   '"555","123","Original, Modified, By","01/01/2019 02:02:02","Title","234"';
 
 const expArray = [
@@ -37,7 +37,7 @@ const expCols = {
 
 describe('#convToParams', () => {
   it('splits a comma-separated-string into array', () => {
-    expect(parser.convToParams(line1)).to.be.eql(expObj);
+    expect(parser.convToParams(line)).to.be.eql(expObj);
   });
 });
 
