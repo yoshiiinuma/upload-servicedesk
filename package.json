@@ -11,7 +11,8 @@
     "create-details": "babel-node src/create-detail-table.js",
     "drop-tickets": "babel-node src/drop-ticket-table.js",
     "drop-details": "babel-node src/drop-detail-table.js",
-    "unit": "NODE_ENV=test mocha --require @babel/register --require @babel/polyfill './test/csv-parser-test.js' --exit || true",
+    "unit": "NODE_ENV=test mocha --require @babel/register --require @babel/polyfill './test/task-runner-test.js' --exit || true",
+    "unit1": "NODE_ENV=test mocha --require @babel/register --require @babel/polyfill './test/csv-parser-test.js' --exit || true",
     "unit2": "NODE_ENV=test mocha --require @babel/register --require @babel/polyfill './test/csv-detail-parser-test.js' --exit || true",
     "unit3": "NODE_ENV=test mocha --require @babel/register --require @babel/polyfill './test/csv-ticket-parser-test.js' --exit || true",
     "test": "NODE_ENV=test mocha --require @babel/register --require @babel/polyfill './test/**/*.{js,es6}' --exit || true"

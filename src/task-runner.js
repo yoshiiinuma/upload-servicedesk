@@ -1,7 +1,7 @@
 
 import EventEmitter from 'events';
 
-const sleep = (ms) => {
+export const sleep = (ms) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 };
 
@@ -34,7 +34,7 @@ class TaskRunner extends EventEmitter {
   }
 
   async runTasks() {
-    console.log('TaskRunner Started');
+    //console.log('TaskRunner Started');
     while (true) {
       let task = this.queue.shift();
 
@@ -42,19 +42,23 @@ class TaskRunner extends EventEmitter {
         await task().catch((e) => console.log(e));
       }
       if (this.state === STOP && this.queue.length === 0) {
-        console.log('TaskRunner Stopped');
-        return;
+        break;
       }
       if (this.queue.length === 0) {
-        console.log('TaskRunner Sleeping ' + SLEEPMS + ' ms...');
+        //console.log('TaskRunner Sleeping ' + SLEEPMS + ' ms...');
         await sleep(SLEEPMS);
       }
     }
+    //console.log('TaskRunner Stopped');
+    this.emit('TASKRUNNER-END');
   }
 }
 
-const createTaskRunner = () => {
+const createTaskRunner = (callback) => {
   const taskRunner = new TaskRunner();
+  if (callback) {
+    taskRunner.on('TASKRUNNER-END', callback);
+  }
 
   return {
     start: () => {
